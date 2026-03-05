@@ -115,6 +115,22 @@
         />
       </div>
 
+      <!-- Decorative dots & dashed lines -->
+      <div class="hero__decor" aria-hidden="true">
+        <span class="hero__dot hero__dot--black-1"></span>
+        <span class="hero__dot hero__dot--black-2"></span>
+        <span class="hero__dot hero__dot--black-3"></span>
+        <span class="hero__dot hero__dot--black-4"></span>
+        <span class="hero__dot hero__dot--orange-1"></span>
+        <span class="hero__dot hero__dot--orange-2"></span>
+        <span class="hero__dot hero__dot--orange-3"></span>
+        <span class="hero__dot hero__dot--orange-4"></span>
+        <span class="hero__dotted-line hero__dotted-line--1"></span>
+        <span class="hero__dotted-line hero__dotted-line--2"></span>
+        <span class="hero__dotted-line hero__dotted-line--3"></span>
+        <span class="hero__dotted-line hero__dotted-line--4"></span>
+      </div>
+
       <!-- CTA Buttons (Frame 56) -->
       <div class="hero__cta">
         <a href="#projects" class="btn btn--primary">
@@ -131,7 +147,7 @@
     </section>
 
     <!-- ============ WORK EXPERIENCE SECTION (Frame 69) ============ -->
-    <section class="experience" id="resume">
+    <section class="experience reveal" id="resume">
       <!-- Section title -->
       <div class="experience__title-wrap">
         <h2 class="experience__title">My Work Experience</h2>
@@ -203,11 +219,11 @@
     </section>
 
     <!-- ============ WHY HIRE ME SECTION (Frame 70) ============ -->
-    <section class="hire-me" id="about">
+    <section class="hire-me reveal" id="about">
       <div class="hire-me__content">
 
         <!-- Left: Photo with concentric circles -->
-        <div class="hire-me__photo-wrap">
+        <div class="hire-me__photo-wrap reveal--left">
           <!-- Decorative concentric circles -->
           <span class="hire-me__circle hire-me__circle--1"></span>
           <span class="hire-me__circle hire-me__circle--2"></span>
@@ -221,7 +237,7 @@
         </div>
 
         <!-- Right: Text content -->
-        <div class="hire-me__info">
+        <div class="hire-me__info reveal--right">
           <div class="hire-me__header">
             <h2 class="hire-me__title">Why Hire Me?</h2>
             <p class="hire-me__desc">Senior Full Stack Developer with 5+ years of experience building and scaling AI/ML powered web products end to end — from system design to production delivery.</p>
@@ -247,7 +263,7 @@
     </section>
 
     <!-- ============ PORTFOLIO SECTION (Frame 76) ============ -->
-    <section class="portfolio" id="projects">
+    <section class="portfolio reveal" id="projects">
 
       <!-- Header: Title + See All button -->
       <div class="portfolio__header">
@@ -362,7 +378,7 @@
     </section>
 
     <!-- ============ CTA / CONTACT SECTION (Frame 324) ============ -->
-    <section class="cta" id="contact">
+    <section class="cta reveal" id="contact">
       <h2 class="cta__title">Have an Awesome Project Idea?<br>Let's Discuss</h2>
 
       <div class="cta__form-area">
@@ -409,7 +425,7 @@
     </section>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="footer" id="footer">
+    <footer class="footer reveal" id="footer">
       <!-- Top row: title + CTA -->
       <div class="footer__top">
         <h2 class="footer__title">Lets Connect there</h2>
@@ -518,6 +534,26 @@
     </footer>
 
   </div>
+
+  <!-- Scroll-reveal observer -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var els = document.querySelectorAll('.reveal, .reveal--left, .reveal--right');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      els.forEach(function (el) { observer.observe(el); });
+    });
+  </script>
 
 </body>
 </html>
