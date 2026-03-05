@@ -114,6 +114,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -206,6 +207,39 @@ img {
   font-weight: 700;
 }
 
+/* Hamburger button - hidden on desktop */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  z-index: 110;
+}
+.nav-hamburger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+/* Hamburger → X animation when open */
+.navbar--open .nav-hamburger span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.navbar--open .nav-hamburger span:nth-child(2) {
+  opacity: 0;
+}
+.navbar--open .nav-hamburger span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
 /* Logo (Frame 14) */
 .nav-logo {
   display: flex;
@@ -271,8 +305,9 @@ img {
   width: 913px;
   max-width: 90%;
   top: 37px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   z-index: 8;
   gap: 10px;
   animation: fadeInUp 0.8s ease-out both;
@@ -564,13 +599,6 @@ img {
   border-left: 2px dashed var(--orange-400);
   right: 38%;
   top: 490px;
-}
-
-/* Hide dots on small screens */
-@media (max-width: 1024px) {
-  .hero__decor {
-    display: none;
-  }
 }
 
 
@@ -1832,14 +1860,27 @@ img {
 }
 
 @media (max-width: 1024px) {
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+    padding-bottom: 120px;
+  }
+
   .hero__heading {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
     width: 100%;
-    padding: 0 20px;
+    padding: 30px 20px 0;
+    animation: fadeInUp 0.8s ease-out both;
   }
 
   .hero__image-wrapper {
     width: 520px;
     height: 580px;
+    margin-top: 10px;
   }
 
   .hero__ellipse {
@@ -1852,11 +1893,23 @@ img {
     height: 520px;
   }
 
+  .hero__cta {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin-top: 20px;
+  }
+
   .testimonial {
     display: none;
   }
 
   .stats {
+    display: none;
+  }
+
+  .hero__decor {
     display: none;
   }
 
@@ -2020,189 +2073,366 @@ img {
 }
 
 @media (max-width: 768px) {
+  /* ---- Navbar: hamburger + vertical menu ---- */
   .navbar {
     flex-wrap: wrap;
     height: auto;
-    padding: 10px;
-    border-radius: 30px;
-    justify-content: center;
-    gap: 6px;
+    padding: 12px 16px;
+    border-radius: 20px;
+    justify-content: space-between;
+    gap: 0;
     margin-top: 10px;
+    max-width: calc(100% - 24px);
   }
 
-  .nav-link {
-    padding: 10px 16px;
-    font-size: 14px;
-    height: auto;
+  .nav-hamburger {
+    display: flex;
+    order: -1;
   }
 
   .nav-logo {
-    order: -1;
-    width: 100%;
-    justify-content: center;
-    padding: 10px 20px;
+    order: 0;
+    padding: 8px 12px;
     height: auto;
+    gap: 8px;
   }
 
+  .nav-logo__text {
+    font-size: 18px;
+  }
+
+  .nav-link {
+    display: none;
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 16px;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  .navbar--open .nav-link {
+    display: flex;
+  }
+
+  .navbar--open {
+    gap: 6px;
+  }
+
+  /* ---- Hero ---- */
   .hero {
     min-height: auto;
-    padding-bottom: 120px;
+    padding-bottom: 100px;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero__heading {
-    top: 20px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    padding: 20px 20px 0;
+    text-align: center;
   }
 
   .hero__title {
-    font-size: 36px;
+    font-size: 32px;
+    line-height: 120%;
+  }
+
+  .hero__swoosh {
+    display: none;
   }
 
   .hero__image-wrapper {
     width: 90%;
-    max-width: 400px;
-    height: 460px;
-    margin-top: -40px;
+    max-width: 340px;
+    height: 400px;
+    margin-top: 20px;
   }
 
   .hero__ellipse {
-    width: 320px;
-    height: 380px;
+    width: 280px;
+    height: 340px;
   }
 
   .hero__photo {
-    width: 300px;
-    height: 400px;
+    width: 260px;
+    height: 360px;
   }
 
   .hero__cta {
-    bottom: 20px;
-    width: 320px;
-    height: 72px;
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    width: 90%;
+    max-width: 320px;
+    height: auto;
+    padding: 8px;
+    margin-top: 20px;
+    gap: 8px;
   }
 
   .btn--primary {
-    width: 170px;
-    height: 52px;
-    font-size: 20px;
+    width: auto;
+    flex: 1;
+    height: 50px;
+    font-size: 18px;
+    padding: 10px 16px;
   }
 
   .btn--ghost {
-    font-size: 20px;
-    height: 48px;
+    font-size: 18px;
+    height: 46px;
+    flex: 1;
   }
 
   .btn__icon {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
   }
 
+  .testimonial { display: none; }
+  .stats { display: none; }
+  .hero__decor { display: none; }
+
+  /* ---- Experience ---- */
   .experience {
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
   .experience__title-wrap {
-    padding: 50px 0;
+    padding: 40px 0;
   }
 
   .experience__title {
-    font-size: 36px;
+    font-size: 28px;
+  }
+
+  .experience__content {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .experience__timeline {
+    flex-direction: row;
+    width: 100%;
+    height: 40px;
+    margin: 0;
+  }
+
+  .experience__timeline-line {
+    top: 50%;
+    bottom: auto;
+    left: 20px;
+    right: 20px;
+    transform: translateY(-50%);
+    width: auto;
+    height: 0;
+    border-left: none;
+    border-top: 2px dashed var(--gray-700);
+  }
+
+  .experience__timeline-dots {
+    flex-direction: row;
+    width: 100%;
+    height: 40px;
+  }
+
+  .experience__companies,
+  .experience__roles {
+    max-width: 100%;
+  }
+
+  .experience__companies {
+    gap: 30px;
+  }
+
+  .experience__roles {
+    gap: 24px;
   }
 
   .experience__company-name,
   .experience__role-name {
-    font-size: 28px;
+    font-size: 22px;
   }
 
   .experience__company-date {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .experience__role-desc {
-    font-size: 16px;
+    font-size: 14px;
+    line-height: 20px;
   }
 
+  /* ---- Hire Me ---- */
   .hire-me {
-    padding: 60px 20px;
-    border-radius: 30px;
+    padding: 50px 16px;
+    border-radius: 24px;
     min-height: auto;
   }
 
+  .hire-me__content {
+    flex-direction: column;
+    gap: 40px;
+  }
+
   .hire-me__photo-wrap {
-    width: 300px;
-    height: 300px;
+    width: 260px;
+    height: 260px;
   }
 
   .hire-me__circle--1,
-  .hire-me__circle--2 { width: 160px; height: 160px; left: 70px; top: 70px; }
-  .hire-me__circle--3 { width: 145px; height: 145px; left: 78px; top: 78px; }
-  .hire-me__circle--4 { width: 130px; height: 130px; left: 85px; top: 85px; }
-  .hire-me__circle--5 { width: 115px; height: 115px; left: 93px; top: 93px; }
-  .hire-me__circle--6 { width: 100px; height: 100px; left: 100px; top: 100px; }
-  .hire-me__circle--7 { width: 85px; height: 85px; left: 108px; top: 108px; }
+  .hire-me__circle--2 { width: 140px; height: 140px; left: 60px; top: 60px; }
+  .hire-me__circle--3 { width: 125px; height: 125px; left: 68px; top: 68px; }
+  .hire-me__circle--4 { width: 110px; height: 110px; left: 75px; top: 75px; }
+  .hire-me__circle--5 { width: 95px; height: 95px; left: 83px; top: 83px; }
+  .hire-me__circle--6 { width: 80px; height: 80px; left: 90px; top: 90px; }
+  .hire-me__circle--7 { width: 65px; height: 65px; left: 98px; top: 98px; }
+
+  .hire-me__info {
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hire-me__header {
+    align-items: center;
+  }
 
   .hire-me__title {
-    font-size: 36px;
-  }
-
-  .hire-me__desc {
-    font-size: 16px;
-  }
-
-  .hire-me__stat-number {
     font-size: 28px;
   }
 
-  .hire-me__btn {
-    padding: 24px 40px;
+  .hire-me__desc {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .hire-me__stat-number {
     font-size: 24px;
   }
 
+  .hire-me__stat-label {
+    font-size: 14px;
+  }
+
+  .hire-me__btn {
+    padding: 18px 32px;
+    font-size: 20px;
+    line-height: 28px;
+    border-radius: 20px;
+  }
+
+  /* ---- Portfolio ---- */
   .portfolio {
-    padding: 60px 20px;
+    padding: 50px 16px;
+  }
+
+  .portfolio__header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
   }
 
   .portfolio__title {
-    font-size: 36px;
-    line-height: 46px;
-  }
-
-  .portfolio__card {
-    height: 280px;
-  }
-
-  .portfolio__card-name {
-    font-size: 36px;
-    line-height: 46px;
-  }
-
-  .portfolio__detail-title {
     font-size: 28px;
     line-height: 36px;
   }
 
-  .portfolio__detail-desc {
+  .portfolio__see-all {
     font-size: 16px;
+    padding: 12px 24px;
+  }
+
+  .portfolio__cards {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .portfolio__card {
+    min-width: 85%;
+    flex: 0 0 85%;
+    height: 240px;
+  }
+
+  .portfolio__card-name {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .portfolio__card-arrow {
+    width: 48px;
+    height: 48px;
+  }
+
+  .portfolio__card-arrow svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .portfolio__tags {
+    gap: 8px;
+    justify-content: center;
   }
 
   .portfolio__tag {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 8px 16px;
+    font-size: 14px;
+    line-height: 18px;
   }
 
+  .portfolio__dots {
+    gap: 8px;
+  }
+
+  .portfolio__dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .portfolio__dot--active {
+    width: 40px;
+  }
+
+  .portfolio__detail-title {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .portfolio__detail-desc {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .portfolio__detail-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* ---- CTA / Contact ---- */
   .cta {
-    padding: 60px 20px;
+    padding: 50px 16px;
   }
 
   .cta__title {
-    font-size: 32px;
-    line-height: 42px;
+    font-size: 26px;
+    line-height: 34px;
+  }
+
+  .cta__form-area {
+    width: 100%;
   }
 
   .cta__input-bar {
     height: auto;
     flex-direction: column;
-    border-radius: 24px;
-    padding: 16px;
+    border-radius: 20px;
+    padding: 14px;
     gap: 12px;
   }
 
@@ -2210,99 +2440,35 @@ img {
     width: 100%;
   }
 
+  .cta__input {
+    font-size: 16px;
+  }
+
   .cta__submit {
     width: 100%;
-    padding: 16px 32px;
+    padding: 14px 28px;
+    font-size: 16px;
   }
 
   .cta__badges {
     flex-direction: column;
     align-items: center;
+    gap: 10px;
   }
 
+  .cta__badge span {
+    font-size: 14px;
+  }
+
+  /* ---- Footer ---- */
   .footer {
-    padding: 20px;
+    padding: 16px;
   }
 
   .footer__top {
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
     align-items: flex-start;
-  }
-
-  .footer__title {
-    font-size: 32px;
-    line-height: 42px;
-  }
-
-  .footer__cta span {
-    font-size: 20px;
-  }
-
-  .footer__columns {
-    flex-direction: column;
-    gap: 36px;
-  }
-
-  .footer__desc {
-    font-size: 16px;
-    line-height: 22px;
-  }
-
-  .footer__newsletter-input {
-    width: 180px;
-  }
-
-  .footer__bottom {
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    text-align: center;
-  }
-
-  .footer__copyright,
-  .footer__legal {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero__title {
-    font-size: 28px;
-  }
-
-  .hello-badge span {
-    font-size: 16px;
-  }
-
-  .hero__image-wrapper {
-    width: 90%;
-    max-width: 320px;
-    height: 380px;
-    margin-top: -40px;
-  }
-
-  .hero__ellipse {
-    width: 280px;
-    height: 330px;
-  }
-
-  .hero__photo {
-    width: 260px;
-    height: 350px;
-  }
-
-  .hero__cta {
-    width: 280px;
-  }
-
-  .btn--primary {
-    width: 150px;
-    font-size: 18px;
-  }
-
-  .btn--ghost {
-    font-size: 18px;
   }
 
   .footer__title {
@@ -2316,7 +2482,6 @@ img {
 
   .footer__cta span {
     font-size: 18px;
-    line-height: 24px;
   }
 
   .footer__cta svg {
@@ -2324,13 +2489,171 @@ img {
     height: 32px;
   }
 
+  .footer__columns {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .footer__col--brand {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .footer__desc {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .footer__col-title {
+    font-size: 16px;
+  }
+
+  .footer__links a {
+    font-size: 14px;
+  }
+
+  .footer__newsletter {
+    flex-direction: column;
+    gap: 10px;
+  }
+
   .footer__newsletter-input {
-    width: 150px;
+    width: 100%;
+    border-radius: 14px;
+    padding: 12px 16px;
     font-size: 14px;
   }
 
   .footer__newsletter-btn {
-    width: 40px;
-    height: 51px;
+    width: 100%;
+    border-radius: 14px;
+    height: 48px;
+    justify-content: center;
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer__copyright,
+  .footer__legal {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: 26px;
+  }
+
+  .hello-badge span {
+    font-size: 14px;
+  }
+
+  .hello-badge {
+    padding: 8px 18px;
+  }
+
+  .hero__image-wrapper {
+    max-width: 280px;
+    height: 340px;
+  }
+
+  .hero__ellipse {
+    width: 240px;
+    height: 290px;
+  }
+
+  .hero__photo {
+    width: 220px;
+    height: 300px;
+  }
+
+  .hero__cta {
+    max-width: 280px;
+  }
+
+  .btn--primary {
+    font-size: 16px;
+    height: 46px;
+  }
+
+  .btn--ghost {
+    font-size: 16px;
+    height: 42px;
+  }
+
+  .experience__title {
+    font-size: 24px;
+  }
+
+  .experience__company-name,
+  .experience__role-name {
+    font-size: 18px;
+  }
+
+  .hire-me__photo-wrap {
+    width: 220px;
+    height: 220px;
+  }
+
+  .hire-me__circle--1,
+  .hire-me__circle--2 { width: 120px; height: 120px; left: 50px; top: 50px; }
+  .hire-me__circle--3 { width: 108px; height: 108px; left: 56px; top: 56px; }
+  .hire-me__circle--4 { width: 96px; height: 96px; left: 62px; top: 62px; }
+  .hire-me__circle--5 { width: 84px; height: 84px; left: 68px; top: 68px; }
+  .hire-me__circle--6 { width: 72px; height: 72px; left: 74px; top: 74px; }
+  .hire-me__circle--7 { width: 60px; height: 60px; left: 80px; top: 80px; }
+
+  .hire-me__title {
+    font-size: 24px;
+  }
+
+  .hire-me__btn {
+    padding: 16px 28px;
+    font-size: 18px;
+  }
+
+  .portfolio__title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .portfolio__card {
+    min-width: 92%;
+    flex: 0 0 92%;
+    height: 200px;
+  }
+
+  .portfolio__card-name {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .cta__title {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .footer__title {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .footer__social {
+    gap: 10px;
+  }
+
+  .footer__social-link {
+    width: 36px;
+    height: 36px;
+  }
+
+  .footer__social-link svg {
+    width: 18px;
+    height: 18px;
   }
 }
